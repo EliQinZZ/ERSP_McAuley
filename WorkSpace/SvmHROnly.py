@@ -25,7 +25,7 @@ def correctness(pred, real):
         if pred[i] != real[i]:
             errors += 1
 
-    return errors / total
+    return 1 - errors / total
 
 print("Reading data...")
 

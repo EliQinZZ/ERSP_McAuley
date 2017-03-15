@@ -10,9 +10,9 @@ def generate_features(data_ist):
         curr_features.append(numpy.amin(data['speed']))
         curr_features.append(numpy.mean(data['speed']))
         curr_features.append(numpy.amax(data['speed']))
-        curr_features.append(numpy.amin(data['heart_rate']))
-        curr_features.append(numpy.mean(data['heart_rate']))
-        curr_features.append(numpy.amax(data['heart_rate']))
+        #curr_features.append(numpy.amin(data['heart_rate']))
+        #curr_features.append(numpy.mean(data['heart_rate']))
+        #curr_features.append(numpy.amax(data['heart_rate']))
 
         feature_list.append(curr_features)
     return feature_list
@@ -25,7 +25,7 @@ def correctness(pred, real):
         if pred[i] != real[i]:
             errors += 1
 
-    return errors / total
+    return 1 - errors / total
 
 print("Reading data...")
 
@@ -56,7 +56,7 @@ y_valid_list = [b['sport'] is 'run' for b in valid_list]
 
 print("Starting")
 print("kernel is linear")
-print("Features are Min, Avg and Max of speed and HR")
+print("Features are Min, Avg and Max of speed only")
 
 c_list = [10, 100, 500, 1000, 1500, 2000]
 
