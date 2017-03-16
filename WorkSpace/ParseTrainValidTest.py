@@ -31,10 +31,10 @@ train_size = int(train_percent * total_workout)
 validation_size = int(validation_percent * total_workout)
 test_size = total_workout - train_size - validation_size
 
-print("Size of total workout for running and biking is {:d}".format(total_workout))
-print("Size of training set for running and biking is {:d}".format(train_size))
-print("Size of validation set for running and biking is {:d}".format(validation_size))
-print("Size of test set for running and biking is {:d}\n".format(test_size))
+print("Size of total workout for top 8 is {:d}".format(total_workout))
+print("Size of training set for top 8 is {:d}".format(train_size))
+print("Size of validation set for top 8 is {:d}".format(validation_size))
+print("Size of test set for top 8 is {:d}\n".format(test_size))
 
 # Split the workout data according to the calculated sizes above
 # Note: slicing ":" is left-inclusive and right-exclusive
