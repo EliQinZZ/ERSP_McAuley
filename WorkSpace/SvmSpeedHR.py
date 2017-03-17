@@ -1,6 +1,7 @@
 import numpy
 from sklearn import svm
 import gzip
+from datetime import datetime
 
 
 def generate_features(data_ist):
@@ -65,7 +66,9 @@ valid_errors = []
 for c in c_list:
     print("Running for c = " + str(c))
     clf = svm.SVC(kernel='linear', C=c)
+    start = datetime.now()
     clf.fit(X_train_list, y_train_list)
+    print("Time for fitting is " + str(datetime.now() - start))
 
     train_predictions = clf.predict(X_train_list)
     valid_predictions = clf.predict(X_valid_list)
