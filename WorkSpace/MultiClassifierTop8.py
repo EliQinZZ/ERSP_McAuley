@@ -1,13 +1,28 @@
 import gzip
 from sklearn import svm
 
-
-feature_low_bound = 0
-feature_high_bound = 3
+'''
+Feature index:
+    0: Speed_Min
+    1: Speed_Avg
+    2: Speed_Max
+    3: Speed_Std
+    4: HR_Min
+    5: HR_Avg
+    6: HR_Max
+    7: HR_Range
+    8: Altitude_Range
+'''
+experiments = [
+    [1, 3, 8],
+    [1, 3, 8, 0, 2],
+    [1, 3, 8, 0, 2, 7],
+    [1, 3, 8, 0, 2, 7, 5],
+]
 c_list = [1]
 
 
-def read_file(fin, low_bound, high_bound):
+def read_file(fin):
 
     feature_list = []
     result_list = []
@@ -15,10 +30,24 @@ def read_file(fin, low_bound, high_bound):
     for l in fin:
         l = l.decode('ascii')
         curr_list = eval(l)
-        feature_list.append(curr_list[0][low_bound:high_bound])
+        feature_list.append(curr_list[0])
         result_list.append(curr_list[1])
 
     return[feature_list, result_list]
+
+
+def perform_experiment(c_value, decision_function, log_file):
+    clf = svm.SVC(kernel='linear', C=c_value, decision_function_shape=decision_function)
+    clf.fit(X_train, y_train)
+    train_predictions = clf.predict(X_train)
+    valid_predictions = clf.predict(X_valid)
+    train_corr = correctness(train_predictions, y_train)
+    valid_corr = correctness(valid_predictions, y_valid)
+    train_corr_list.append(train_corr)
+    valid_corr_list.append(valid_corr)
+    log_file.write(str(train_predictions) + "\n")
+    log_file.write(str(valid_predictions) + "\n")
+    print("Train correctness: {:.6}\tValid correctness: {:.6}\n".format(train_corr, valid_corr))
 
 
 def correctness(pred, real):
@@ -39,73 +68,53 @@ vin = gzip.open('../TrainValidTest/feature_validation_set_top_8.json.gz', 'rb')
 
 print("Reading files")
 
-train_list = read_file(tin, feature_low_bound, feature_high_bound)
-valid_list = read_file(vin, feature_low_bound, feature_high_bound)
+train_list = read_file(tin)
+valid_list = read_file(vin)
 
 vin.close()
 tin.close()
 
 print("Finished reading")
 
-X_train = train_list[0]
-y_train = train_list[1]
+for feature_indexes in experiments:
 
-X_valid = valid_list[0]
-y_valid = valid_list[1]
+    print("Begging experiment with feature indexes " + str(feature_indexes))
 
-print("Features are from index {} to index {}".format(feature_low_bound, feature_high_bound))
-print("# of training data is {}".format(len(X_train)))
-print("# of validation data is {}".format(len(X_valid)))
+    X_train = []
+    y_train = train_list[1]
+    X_valid = []
+    y_valid = valid_list[1]
 
-train_corr_list = []
-valid_corr_list = []
+    print("Constructing training and validation features")
 
-print("Begin with decision function OVR\n")
+    for features in train_list:
+        curr_train_features = []
+        curr_valid_features = []
+        for index in feature_indexes:
+            curr_train_features.append(train_list[0][index])
+            curr_valid_features.append(valid_list[0][index])
+        X_train.append(curr_train_features)
+        X_valid.append(curr_valid_features)
 
-for c in c_list:
-    print("Begin with c = {}".format(c))
-    clf = svm.SVC(kernel='linear', C=c, decision_function_shape='ovr')
-    clf.fit(X_train, y_train)
+    print("# of training data is {}".format(len(X_train)))
+    print("# of validation data is {}".format(len(X_valid)))
 
-    train_predictions = clf.predict(X_train)
-    valid_predictions = clf.predict(X_valid)
+    train_corr_list = []
+    valid_corr_list = []
 
-    train_corr = correctness(train_predictions, y_train)
-    valid_corr = correctness(valid_predictions, y_valid)
+    print("Begin with decision function OVR\n")
 
-    train_corr_list.append(train_corr)
-    valid_corr_list.append(valid_corr)
+    for c in c_list:
+        print("Begin with c = {}".format(c))
+        perform_experiment(c, 'ovr', log_ovr)
 
-    log_ovr.write(str(train_predictions) + "\n")
-    log_ovr.write(str(valid_predictions) + "\n")
+    log_ovr.close()
 
-    print("Train correctness: {:.6}\tValid correctness: {:.6}\n".format(train_corr, valid_corr))
+    print("Begin with decision function OVO\n")
 
-log_ovr.close()
+    for c in c_list:
+        print("Begin with c = {}".format(c))
+        perform_experiment(c, 'ovo', log_ovo)
 
-
-print("Begin with decision function OVO\n")
-train_corr_list = []
-valid_corr_list = []
-
-for c in c_list:
-    print("Begin with c = {}".format(c))
-    clf = svm.SVC(kernel='linear', C=c, decision_function_shape='ovo')
-    clf.fit(X_train, y_train)
-
-    train_predictions = clf.predict(X_train)
-    valid_predictions = clf.predict(X_valid)
-
-    train_corr = correctness(train_predictions, y_train)
-    valid_corr = correctness(valid_predictions, y_valid)
-
-    train_corr_list.append(train_corr)
-    valid_corr_list.append(valid_corr)
-
-    log_ovo.write(str(train_predictions) + "\n")
-    log_ovo.write(str(valid_predictions) + "\n")
-
-    print("Train correctness: {:.6}\tValid correctness: {:.6}\n".format(train_corr, valid_corr))
-
-log_ovr.close()
+    log_ovr.close()
 

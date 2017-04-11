@@ -1,3 +1,4 @@
 *.gz
+.idea/workspace.xml
 *.json
 .DS_Store

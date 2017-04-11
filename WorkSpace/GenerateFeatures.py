@@ -1,16 +1,33 @@
 import numpy
 import gzip
 
-file_list = ['training_set_top_8.json.gz', 'validation_set_top_8.json.gz']
+file_list = ['training_set_top_4.json.gz', 'validation_set_top_4.json.gz']
+
+'''
+Feature index:
+    0: Speed_Min
+    1: Speed_Avg
+    2: Speed_Max
+    3: Speed_Std
+    4: HR_Min
+    5: HR_Avg
+    6: HR_Max
+    7: HR_Range
+    8: Altitude_Range
+'''
 
 
 def generate_features(curr_dic):
     features = [numpy.amin(curr_dic['speed']),
                 numpy.mean(curr_dic['speed']),
                 numpy.amax(curr_dic['speed']),
+                numpy.std(curr_dic['speed']),
                 numpy.amin(curr_dic['heart_rate']),
                 numpy.mean(curr_dic['heart_rate']),
-                numpy.amax(curr_dic['heart_rate'])]
+                numpy.amax(curr_dic['heart_rate']),
+                numpy.ptp(curr_dic['heart_rate']),
+                numpy.ptp(curr_dic['altitude'])
+                ]
     return features
 
 
@@ -28,7 +45,7 @@ for file in file_list:
     zin.close()
 
     print("Writing features for " + file)
-    zout = gzip.open('../TrainValidTest/feature_' + file, 'wb')
+    zout = gzip.open('../TrainValidTest/features_' + file, 'wb')
     for feature in feature_list:
         zout.write(bytes(str(feature) + '\n', 'ascii'))
     zout.close()
