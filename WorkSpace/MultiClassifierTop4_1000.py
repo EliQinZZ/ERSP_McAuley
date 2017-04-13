@@ -29,16 +29,16 @@ def read_file(fin):
     feature_list = []
     result_list = []
 
-    num_data = 0
+    #num_data = 0
 
     for l in fin:
         l = l.decode('ascii')
         curr_list = eval(l)
         feature_list.append(curr_list[0])
         result_list.append(curr_list[1])
-        num_data += 1
-        if num_data == 1000:
-            break
+        #num_data += 1
+        #if num_data == 1000:
+            #break
 
     return[feature_list, result_list]
 
