@@ -29,16 +29,16 @@ def read_file(fin):
     feature_list = []
     result_list = []
 
-    #num_data = 0
+    num_data = 0
 
     for l in fin:
         l = l.decode('ascii')
         curr_list = eval(l)
         feature_list.append(curr_list[0])
         result_list.append(curr_list[1])
-        #num_data += 1
-        #if num_data == 1000:
-            #break
+        num_data += 1
+        if num_data == 1000:
+            break
 
     return[feature_list, result_list]
 
@@ -54,8 +54,8 @@ def perform_experiment(X_train, y_train, X_valid, y_valid, c_value, decision_fun
     valid_corr_list.append(valid_corr)
     log_file.write(str(train_predictions) + "\n")
     log_file.write(str(valid_predictions) + "\n")
-    tout.write(bytes(str(y_train) + "\n" + str(train_predictions) + "\n", 'ascii'))
-    vout.write(bytes(str(y_valid) + "\n" + str(valid_predictions) + "\n", 'ascii'))
+    tout.write(bytes(str(y_train) + "\n" + str(list(train_predictions)) + "\n", 'ascii'))
+    vout.write(bytes(str(y_valid) + "\n" + str(list(valid_predictions)) + "\n", 'ascii'))
     print("Train correctness: {:.6}\tValid correctness: {:.6}\n".format(train_corr, valid_corr))
 
 
