@@ -1,7 +1,10 @@
 import numpy
 import gzip
+import os
 
-file_list = ['training_set_top_4.json.gz', 'validation_set_top_4.json.gz']
+file_list = []
+for file in os.listdir(path='../TrainValidTestTemp'):
+    file_list.append(file)
 
 '''
 Feature index:
@@ -34,7 +37,7 @@ def generate_features(curr_dic):
 for file in file_list:
 
     print("Processing " + file)
-    zin = gzip.open('../TrainValidTest/' + file, 'rb')
+    zin = gzip.open('../TrainValidTestTemp/' + file, 'rb')
 
     print("Generating features for " + file)
     feature_list = []
@@ -45,7 +48,7 @@ for file in file_list:
     zin.close()
 
     print("Writing features for " + file)
-    zout = gzip.open('../TrainValidTest/features_' + file, 'wb')
+    zout = gzip.open('../TrainValidTestTemp/features_' + file, 'wb')
     for feature in feature_list:
         zout.write(bytes(str(feature) + '\n', 'ascii'))
     zout.close()
