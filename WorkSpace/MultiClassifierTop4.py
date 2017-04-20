@@ -12,17 +12,32 @@ Feature index:
     6: HR_Max
     7: HR_Range
     8: Altitude_Range
+    9: Gender
+    10: Angle_Avg
+    11: Angle_Std
 '''
+
+workout_indexes = {
+    "bike": 0
+    "bike (transport)": 1
+    "mountain bike": 2
+    "run": 3
+}
+
+workout_list = ["bike", "bike (transport)", "mountain bike", "run"]
+
 experiments = [
     [1, 3, 8],
     [1, 3, 8, 0, 2],
     [1, 3, 8, 0, 2, 7],
     [1, 3, 8, 0, 2, 7, 5],
 ]
+
 c_list = [1]
 
 tout = gzip.open('../MulticlassTop4ResultTrain.gz', 'wb')
 vout = gzip.open('../MulticlassTop4ResultValid.gz', 'wb')
+
 
 def read_file(fin):
 

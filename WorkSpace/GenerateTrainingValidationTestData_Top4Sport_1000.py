@@ -44,17 +44,17 @@ validation_list = workout_list[train_size: train_size + validation_size]
 test_list = workout_list[train_size + validation_size:]
 
 # Write into separate files
-with gzip.open("../TrainValidTestTemp/training_set_top4_1000.json.gz", 'wb') as file1:
+with gzip.open("../TrainValidTest/training_set_top4_1000.json.gz", 'wb') as file1:
     for workout in train_list:
         file1.write(workout)
 print("Finished writing training set\n")
 
-with gzip.open("../TrainValidTestTemp/validation_set_top4_1000.json.gz", 'wb') as file2:
+with gzip.open("../TrainValidTest/validation_set_top4_1000.json.gz", 'wb') as file2:
     for workout in validation_list:
         file2.write(workout)
 print("Finished writing validation set\n")
 
-with gzip.open("../TrainValidTestTemp/test_set_top4_1000.json.gz", 'wb') as file3:
+with gzip.open("../TrainValidTest/test_set_top4_1000.json.gz", 'wb') as file3:
     for workout in test_list:
         file3.write(workout)
 print("Finished writing test set\n")
