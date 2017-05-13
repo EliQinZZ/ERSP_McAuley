@@ -1,8 +1,10 @@
 import numpy as np
-import math
 import gzip
 import os
-import sys
+
+from math import acos
+from math import sqrt
+from math import pi
 
 file_list = []
 for file in os.listdir(path='../TrainValidTest'):
@@ -23,83 +25,12 @@ Feature index:
     7: HR_Range
     8: Altitude_Range
     9: Gender
-    10: Angle_Avg
-    11: Angle_Std
+    10: Angle_Std
 '''
-
-def latlong_to_3d(latr, lonr):
-    """Convert a point given latitude and longitude in radians to
-    3-dimensional space, assuming a sphere radius of one."""
-    return np.array((
-        math.cos(latr) * math.cos(lonr),
-        math.cos(latr) * math.sin(lonr),
-        math.sin(latr)
-    ))
-
-def angle_between_vectors_degrees(u, v):
-    """Return the angle between two vectors in any dimension space,
-    in degrees."""
-
-    num_to_acos = np.dot(u, v) / (np.linalg.norm(u) * np.linalg.norm(v))
-
-    if num_to_acos < -1 or num_to_acos > 1:
-        return -999
-
-    return np.rad2deg(
-        math.acos(np.dot(u, v) / (np.linalg.norm(u) * np.linalg.norm(v))))
-
-
-def generate_angle_list(latitude_list, longitude_list):
-    if len(latitude_list) <= 2:
-        return [0]
-
-    angle_list = []
-
-    for i in range(len(latitude_list)):
-        if i + 2 >= len(latitude_list):
-            break
-
-        curr_points = [
-            (latitude_list[i], longitude_list[i]),
-            (latitude_list[i + 1], longitude_list[i + 1]),
-            (latitude_list[i + 2], longitude_list[i + 2]),
-        ]
-
-        calculated_angle = calculate_angle(curr_points)
-        if calculated_angle != -999:
-            angle_list.append(calculated_angle)
-
-    return angle_list
-
-
-def calculate_angle(points):
-    A = points[0]
-    B = points[1]
-    C = points[2]
-
-    # Convert the points to numpy latitude/longitude radians space
-    a = np.radians(np.array(A))
-    b = np.radians(np.array(B))
-    c = np.radians(np.array(C))
-
-    # Vectors in latitude/longitude space
-    avec = a - b
-    cvec = c - b
-
-    # Adjust vectors for changed longitude scale at given latitude into 2D space
-    lat = b[0]
-    avec[1] *= math.cos(lat)
-    cvec[1] *= math.cos(lat)
-
-    # Find the angle between the vectors in 2D space
-    angle2deg = angle_between_vectors_degrees(avec, cvec)
-
-    return angle2deg
-
 
 def generate_features(curr_dic):
 
-    angle_list = generate_angle_list(curr_dic['latitude'], curr_dic['longitude'])
+    angle_list = generate_avg_angle_change_feature(curr_dic)
 
     features = [np.amin(curr_dic['speed']),
                 np.mean(curr_dic['speed']),
@@ -111,11 +42,69 @@ def generate_features(curr_dic):
                 np.ptp(curr_dic['heart_rate']),
                 np.ptp(curr_dic['altitude']),
                 curr_dic['gender'],
-                np.mean(angle_list),
                 np.std(angle_list)
                 ]
     return features
 
+
+def generate_avg_angle_change_feature(workout):
+
+    angle_list1 = []
+    # angle_list2 = []
+
+    longitude_list = workout['longitude']
+    latitude_list = workout['latitude']
+
+    for i in range(0, len(longitude_list) - 2):
+        vector1 = [longitude_list[i + 1] - longitude_list[i], latitude_list[i + 1] - latitude_list[i]]
+        vector2 = [longitude_list[i + 2] - longitude_list[i + 1], latitude_list[i + 2] - latitude_list[i + 1]]
+        clockwise_angle = angle_clockwise(vector1, vector2)
+        if clockwise_angle == 360:
+            clockwise_angle = 0
+        # first method
+        angle1 = clockwise_angle
+        angle_list1.append(angle1)
+
+        # second method
+        # if clockwise_angle > 180:
+        #     clockwise_angle = 360 - clockwise_angle
+        # angle2 = clockwise_angle
+        # angle_list2.append(angle2)
+
+    return angle_list1
+
+
+def length(v):
+    return sqrt(v[0]**2 + v[1]**2)
+
+
+def dot_product(v, w):
+    return v[0]*w[0]+v[1]*w[1]
+
+
+def determinant(v, w):
+    return v[0]*w[1]-v[1]*w[0]
+
+
+def inner_angle(v,w):
+    if length(v) == 0 or length(w) == 0:
+        return 0
+    cos_x = dot_product(v, w)/(length(v)*length(w))
+    if cos_x > 1:
+        cos_x = 1
+    if cos_x < -1:
+        cos_x = -1
+    rad = acos(cos_x)  # in radians
+    return rad*180/pi  # returns degrees
+
+# return the clockwise angle from A to B
+def angle_clockwise(A, B):
+    inner = inner_angle(A, B)
+    det = determinant(A, B)
+    if det < 0:  # This is a property of the det. If the det < 0 then B is clockwise of A
+        return inner
+    else:  # If the det > 0 then A is immediately clockwise of B
+        return 360-inner
 
 for file in file_list:
 

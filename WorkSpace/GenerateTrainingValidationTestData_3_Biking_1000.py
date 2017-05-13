@@ -21,7 +21,7 @@ for sportfile in sportlist:
             workout_list.append(workout)
             total_workout += 1
             count += 1
-    8
+
 print("Finished reading \n")
 shuffle(workout_list)
 print("Finished shuffling \n")

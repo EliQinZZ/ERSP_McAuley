@@ -6,7 +6,7 @@ num_feature = 11
 
 feature_list = []
 
-for i in range(11):
+for i in range(num_feature):
     feature_list.append([])
 
 
@@ -32,26 +32,28 @@ for file in file_list:
 
     for l in zin:
         l.decode('ascii')
-        dic = eval(l)
+        l = eval(l)
 
         features = l[0]
 
-
         for i in range(len(features)):
             if isfloat(features[i]):
-                feature_list[i].append(float[features[i]])
+                feature_list[i].append(float(features[i]))
             else:
                 feature_list[i].append(features[i])
 
         workout_types.append(l[1])
 
     for feature in feature_list:
-        feature = preprocessing.normalize(feature)
+        if isfloat(feature[i]):
+            print(feature)
+            preprocessing.normalize(feature, return_norm=True)
+            print(feature)
 
     zout = gzip.open('../TrainValidTest/normalized_' + file, 'wb')
     for i in range(len(feature_list[0])):
         curr_features = []
-        for j in range(len(feature_list)):
+        for j in range(len(workout_types)):
             curr_features.append(feature_list[j][i])
         output_list = [curr_features, workout_types[i]]
         zout.write(bytes(str(output_list) + '\n', 'ascii'))

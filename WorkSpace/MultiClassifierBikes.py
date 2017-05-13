@@ -12,14 +12,14 @@ Feature index:
     6: HR_Max
     7: HR_Range
     8: Altitude_Range
+    9: Gender
+    10: Angle_Std
 '''
 experiments = [
-    [1, 3, 8],
-    [1, 3, 8, 0, 2],
-    [1, 3, 8, 0, 2, 7],
     [1, 3, 8, 0, 2, 7, 5],
+    [1, 3, 8, 0, 2, 7, 5, 10]
 ]
-c_list = [1]
+c_list = [1000]
 
 tout = gzip.open('../MultiClassifierResults/TrainBikes1000.gz', 'wb')
 vout = gzip.open('../MultiClassifierResults/ValidBikes1000.gz', 'wb')
