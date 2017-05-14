@@ -1,0 +1,6 @@
+Reading data...
+Traceback (most recent call last):
+  File "/Users/eliqin/Documents/ERSP_McAuley/WorkSpace/SvmHROnly.py", line 40, in <module>
+    dic = eval(l)
+  File "<string>", line 1, in <module>
+KeyboardInterrupt

@@ -1,0 +1,19 @@
+Reading data...
+done
+Starting
+kernel is linear
+Features are Min, Avg and Max of speed only
+Running for c = 1
+0.967101	0.965222
+Running for c = 10
+0.967116	0.965327
+Running for c = 100
+0.967161	0.965362
+Running for c = 500
+0.967476	0.965362
+Running for c = 1000
+0.967461	0.965117
+Running for c = 1500
+0.967266	0.964732
+Running for c = 2000
+0.966666	0.963787

@@ -58,7 +58,7 @@ print("Starting")
 print("kernel is linear")
 print("Features are Min, Avg and Max of HR only")
 
-c_list = [10, 100, 500, 1000, 1500, 2000]
+c_list = [1, 10, 100, 500, 1000, 1500, 2000]
 
 train_errors = []
 valid_errors = []
