@@ -1,0 +1,12 @@
+Reading files
+Finished reading
+Begging experiment with feature indexes [1, 3, 8, 0, 2, 7, 5]
+Constructing training and validation features
+# of training data is 1000
+# of validation data is 1000
+Begin with decision function OVR
+
+Begin with c = 1
+Train correctness: 0.848	Valid correctness: 0.835
+
+Finished.

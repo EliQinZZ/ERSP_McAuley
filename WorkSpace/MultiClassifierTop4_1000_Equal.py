@@ -1,5 +1,7 @@
 import gzip
 from sklearn import svm
+from datetime import datetime
+
 
 '''
 Feature index:
@@ -14,9 +16,9 @@ Feature index:
     8: Altitude_Range
 '''
 experiments = [
-    [1, 3, 8],
-    [1, 3, 8, 0, 2],
-    [1, 3, 8, 0, 2, 7],
+#    [1, 3, 8],
+#    [1, 3, 8, 0, 2],
+#    [1, 3, 8, 0, 2, 7],
     [1, 3, 8, 0, 2, 7, 5],
 ]
 c_list = [1]
@@ -29,23 +31,25 @@ def read_file(fin):
     feature_list = []
     result_list = []
 
-    num_data = 0
+#    num_data = 0
 
     for l in fin:
         l = l.decode('ascii')
         curr_list = eval(l)
         feature_list.append(curr_list[0])
         result_list.append(curr_list[1])
-        num_data += 1
-        if num_data == 1000:
-            break
+#        num_data += 1
+#        if num_data == 1000:
+#            break
 
     return[feature_list, result_list]
 
 
 def perform_experiment(X_train, y_train, X_valid, y_valid, c_value, decision_function, log_file):
     clf = svm.SVC(kernel='linear', C=c_value, decision_function_shape=decision_function)
+    start = datetime.now()
     clf.fit(X_train, y_train)
+    print("Time for fitting is " + str(datetime.now() - start))
     train_predictions = clf.predict(X_train)
     valid_predictions = clf.predict(X_valid)
     train_corr = correctness(train_predictions, y_train)

@@ -23,8 +23,8 @@ experiments = [
 ]
 c_list = [1]
 
-tout = gzip.open('../MulticlassTop4ResultTrain.gz', 'wb')
-vout = gzip.open('../MulticlassTop4ResultValid.gz', 'wb')
+tout = gzip.open('../MultiClassifierResults/TrainTop4Equal1000.gz', 'wb')
+vout = gzip.open('../MultiClassifierResults/ValidTop4Equal1000.gz', 'wb')
 
 def read_file(fin):
 
@@ -75,8 +75,8 @@ def correctness(pred, real):
 
 log_ovr = open('MultiClassifierTop4LogOvr', 'w')
 
-tin = gzip.open('../TrainValidTest/features_training_set_top_4.json.gz', 'rb')
-vin = gzip.open('../TrainValidTest/features_validation_set_top_4.json.gz', 'rb')
+tin = gzip.open('../TrainValidTest/features_training_set_top4_1000.json.gz', 'rb')
+vin = gzip.open('../TrainValidTest/features_validation_set_top4_1000.json.gz', 'rb')
 
 print("Reading files")
 
@@ -123,7 +123,11 @@ for feature_indexes in experiments:
         print("Begin with c = {}".format(c))
         perform_experiment(X_train, y_train, X_valid, y_valid, c, 'ovr', log_ovr)
 
+    print("Begin with decision function OVO\n")
 
+    for c in c_list:
+        print("Begin with c = {}".format(c))
+        perform_experiment(X_train, y_train, X_valid, y_valid, c, 'ovo', log_ovr)
 
 
 log_ovr.close()

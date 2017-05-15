@@ -14,17 +14,21 @@ Feature index:
     6: HR_Max
     7: HR_Range
     8: Altitude_Range
+    9: Gender
+    10: Angle_Std
 '''
 experiments = [
-#    [1, 3, 8],
-#    [1, 3, 8, 0, 2],
-#    [1, 3, 8, 0, 2, 7],
+    [1, 3, 8],
+    [1, 3, 8, 0, 2],
+    [1, 3, 8, 0, 2, 7],
     [1, 3, 8, 0, 2, 7, 5],
+#    [1, 3, 8, 0, 2, 7, 5, 9],
+    [1, 3, 8, 0, 2, 7, 5, 10],
 ]
 c_list = [1]
 
-tout = gzip.open('../MulticlassTop4ResultTrain.gz', 'wb')
-vout = gzip.open('../MulticlassTop4ResultValid.gz', 'wb')
+tout = gzip.open('../MultiClassifierResults/TrainTop4Equal1000.gz', 'wb')
+vout = gzip.open('../MultiClassifierResults/ValidTop4Equal1000.gz', 'wb')
 
 def read_file(fin):
 
@@ -75,8 +79,8 @@ def correctness(pred, real):
 
 log_ovr = open('MultiClassifierTop4LogOvr', 'w')
 
-tin = gzip.open('../TrainValidTest/features_training_set_top_4.json.gz', 'rb')
-vin = gzip.open('../TrainValidTest/features_validation_set_top_4.json.gz', 'rb')
+tin = gzip.open('../TrainValidTest/features_training_set_top4_1000.json.gz', 'rb')
+vin = gzip.open('../TrainValidTest/features_validation_set_top4_1000.json.gz', 'rb')
 
 print("Reading files")
 

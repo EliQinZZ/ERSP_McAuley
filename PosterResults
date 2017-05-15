@@ -1,0 +1,111 @@
+Begin poster driver
+
+
+Begin MultiClassifierTop4
+
+
+Finished MultiClassifierTop4
+
+
+Begin MultiClassifierTop4_1000_Equal
+
+Reading files
+Finished reading
+Begging experiment with feature indexes [1, 3, 8, 0, 2, 7, 5]
+Constructing training and validation features
+# of training data is 1000
+# of validation data is 1000
+Begin with decision function OVR
+
+Begin with c = 1
+Time for fitting is 0:00:06.171339
+Train correctness: 0.848	Valid correctness: 0.835
+
+Finished.
+
+Finished MultiClassifierTop4_1000_Equal
+
+
+Begin MultiClassifierTop4_1000_Equal_OVO_OVR
+
+Reading files
+Finished reading
+Begging experiment with feature indexes [1, 3, 8, 0, 2, 7, 5]
+Constructing training and validation features
+# of training data is 1000
+# of validation data is 1000
+Begin with decision function OVR
+
+Begin with c = 1
+Time for fitting is 0:00:06.206686
+Train correctness: 0.848	Valid correctness: 0.835
+
+Begin with decision function OVO
+
+Begin with c = 1
+Time for fitting is 0:00:06.087424
+Train correctness: 0.848	Valid correctness: 0.835
+
+Finished.
+
+Finished MultiClassifierTop4_1000_Equal_OVO_OVR
+
+
+Begin MultiClassifierTopTop4_1000_Equal_Exps
+
+Reading files
+Finished reading
+Begging experiment with feature indexes [1, 3, 8]
+Constructing training and validation features
+# of training data is 1000
+# of validation data is 1000
+Begin with decision function OVR
+
+Begin with c = 1
+Time for fitting is 0:00:06.807802
+Train correctness: 0.78	Valid correctness: 0.773
+
+Begging experiment with feature indexes [1, 3, 8, 0, 2]
+Constructing training and validation features
+# of training data is 1000
+# of validation data is 1000
+Begin with decision function OVR
+
+Begin with c = 1
+Time for fitting is 0:00:05.283740
+Train correctness: 0.798	Valid correctness: 0.8
+
+Begging experiment with feature indexes [1, 3, 8, 0, 2, 7]
+Constructing training and validation features
+# of training data is 1000
+# of validation data is 1000
+Begin with decision function OVR
+
+Begin with c = 1
+Time for fitting is 0:00:05.262470
+Train correctness: 0.843	Valid correctness: 0.83
+
+Begging experiment with feature indexes [1, 3, 8, 0, 2, 7, 5]
+Constructing training and validation features
+# of training data is 1000
+# of validation data is 1000
+Begin with decision function OVR
+
+Begin with c = 1
+Time for fitting is 0:00:06.213747
+Train correctness: 0.848	Valid correctness: 0.835
+
+Begging experiment with feature indexes [1, 3, 8, 0, 2, 7, 5, 10]
+Constructing training and validation features
+# of training data is 1000
+# of validation data is 1000
+Begin with decision function OVR
+
+Begin with c = 1
+Time for fitting is 0:00:07.094542
+Train correctness: 0.85	Valid correctness: 0.839
+
+Finished.
+
+Finished MultiClassifierTopTop4_1000_Equal_Exps
+
