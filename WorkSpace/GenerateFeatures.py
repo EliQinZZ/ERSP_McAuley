@@ -41,7 +41,7 @@ def generate_features(curr_dic):
                 np.amax(curr_dic['heart_rate']),
                 np.ptp(curr_dic['heart_rate']),
                 np.ptp(curr_dic['altitude']),
-                curr_dic['gender'],
+                {'unknown': 0, 'male': 1, 'female': 2}[curr_dic['gender']],
                 np.std(angle_list)
                 ]
     return features
