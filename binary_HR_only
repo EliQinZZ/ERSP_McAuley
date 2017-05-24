@@ -1,19 +1,1 @@
 Reading data...
-done
-Starting
-kernel is linear
-Features are Min, Avg and Max of HR only
-Running for c = 1
-0.757171	0.754312
-Running for c = 10
-0.755657	0.753683
-Running for c = 100
-0.755642	0.753053
-Running for c = 500
-0.756032	0.753683
-Running for c = 1000
-0.755762	0.753298
-Running for c = 1500
-0.755162	0.752108
-Running for c = 2000
-0.755702	0.753403

@@ -29,8 +29,8 @@ def correctness(pred, real):
 
 print("Reading data...")
 
-tin = gzip.open('../RunningBikingTrainValidTest/training_set_running_and_biking.json.gz', 'rb')
-vin = gzip.open('../RunningBikingTrainValidTest/validation_set_running_and_biking.json.gz', 'rb')
+tin = gzip.open('../RunningBikingTrainValidTest/training_set_running_and_biking_10000.json.gz', 'rb')
+vin = gzip.open('../RunningBikingTrainValidTest/validation_set_running_and_biking_10000.json.gz', 'rb')
 
 train_list = []
 valid_list = []

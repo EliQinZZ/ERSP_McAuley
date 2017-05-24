@@ -1,0 +1,26 @@
+Begin poster driver
+
+
+Begin SvmHROnly
+
+
+Finished SvmHROnly
+
+
+Begin SvmSpeedOnly
+
+
+Finished SvmSpeedOnly
+
+
+Begin SvmSpeedHR
+
+
+Finished SvmSpeedHR
+
+
+Begin GenerateFeatures_New
+
+Processing validation_set_top4_1000.json.gz
+Generating features for validation_set_top4_1000.json.gz
+constructing ratio...
