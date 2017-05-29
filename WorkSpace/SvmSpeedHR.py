@@ -32,9 +32,11 @@ print("Reading data...")
 
 tin = gzip.open('../RunningBikingTrainValidTest/training_set_running_and_biking_10000.json.gz', 'rb')
 vin = gzip.open('../RunningBikingTrainValidTest/validation_set_running_and_biking_10000.json.gz', 'rb')
+testin = gzip.open('../RunningBikingTrainValidTest/test_set_running_and_biking_10000.json.gz', 'rb')
 
 train_list = []
 valid_list = []
+test_list = []
 
 for l in tin:
     l = l.decode('ascii')
@@ -44,9 +46,14 @@ for l in vin:
     l = l.decode('ascii')
     dic = eval(l)
     valid_list.append(dic)
+for l in testin:
+    l = l.decode('ascii')
+    dic = eval(l)
+    test_list.append(dic)
 
 tin.close()
 vin.close()
+testin.close()
 
 print("done")
 
@@ -54,6 +61,8 @@ X_train_list = generate_features(train_list)
 y_train_list = [b['sport'] is 'run' for b in train_list]
 X_valid_list = generate_features(valid_list)
 y_valid_list = [b['sport'] is 'run' for b in valid_list]
+X_test_list = generate_features(test_list)
+y_test_list = [b['sport'] is 'run' for b in test_list]
 
 print("Starting")
 print("kernel is linear")
@@ -63,6 +72,7 @@ c_list = [1, 10, 100, 500, 1000, 1500, 2000]
 
 train_errors = []
 valid_errors = []
+test_errors = []
 for c in c_list:
     print("Running for c = " + str(c))
     clf = svm.SVC(kernel='linear', C=c)
@@ -72,9 +82,13 @@ for c in c_list:
 
     train_predictions = clf.predict(X_train_list)
     valid_predictions = clf.predict(X_valid_list)
+    test_predictions = clf.predict(X_test_list)
 
     train_errors.append(correctness(train_predictions, y_train_list))
     valid_errors.append(correctness(valid_predictions, y_valid_list))
+    test_errors.append(correctness(test_predictions, y_test_list))
 
-    print("{:.6}\t{:.6}".format(train_errors[len(train_errors) - 1], valid_errors[len(valid_errors) - 1]))
+    print("{:.6}\t{:.6}\t{:.6}".format(train_errors[len(train_errors) - 1], 
+                                       valid_errors[len(valid_errors) - 1], 
+                                       test_errors[len(valid_errors) - 1]))
 
