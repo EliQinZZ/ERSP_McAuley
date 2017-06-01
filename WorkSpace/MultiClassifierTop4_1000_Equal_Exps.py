@@ -16,29 +16,16 @@ Feature index:
     8: Altitude_Range
     9: Gender
     10: Angle_Std
+    11: DOD
 '''
 experiments = [
-#    [1, 3, 8],
-#    [1, 3, 8, 0, 2],
-#    [1, 3, 8, 0, 2, 7],
-#    [1, 3, 8, 0, 2, 7, 5],
-#    [1, 3, 8, 0, 2, 7, 5, 9],
-#    [1, 3, 8, 0, 2, 7, 5, 10],
-#    [0, 1, 3, 4, 5, 7, 10],
-#    [1, 3, 4, 5, 7, 10],
-#    [0, 3, 4, 5, 7, 10],
-#    [0, 1, 4, 5, 7, 10],
-#    [0, 1, 3, 5, 7, 10],
-#    [0, 1, 3, 4, 7, 10],
-#    [0, 1, 3, 4, 5, 10],
-#    [0, 1, 3, 4, 5, 7]
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ]
 c_list = [1]
 
-tout = gzip.open('../MultiClassifierResults/TrainTop4Equal1000.gz', 'wb')
-vout = gzip.open('../MultiClassifierResults/ValidTop4Equal1000.gz', 'wb')
+tout = gzip.open('../MultiClassifierResults/TrainBikes1000.gz', 'wb')
+vout = gzip.open('../MultiClassifierResults/ValidBikes1000.gz', 'wb')
 
 def read_file(fin):
 
@@ -89,8 +76,8 @@ def correctness(pred, real):
 
 log_ovr = open('MultiClassifierTop4LogOvr', 'w')
 
-tin = gzip.open('../TrainValidTest/features_training_set_top4_1000.json.gz', 'rb')
-vin = gzip.open('../TrainValidTest/features_validation_set_top4_1000.json.gz', 'rb')
+tin = gzip.open('../TrainValidTest/features_training_set_3_biking_1000.json.gz', 'rb')
+vin = gzip.open('../TrainValidTest/features_validation_set_3_biking_1000.json.gz', 'rb')
 
 print("Reading files")
 
