@@ -16,7 +16,7 @@ for file in os.listdir(path='../TrainValidTest'):
         file_list.append(file)
 '''
 
-file_list = ["validation_set_top4_1000.json.gz", "training_set_top4_1000.json.gz", "test_set_top4_1000.json.gz"]
+file_list = ["test_set_top4_1000.json.gz"]
 
 
 '''
